@@ -42,15 +42,18 @@ jobs:
         working-directory: app
         run: bun install
 
-      - name: Build and prerender cinematic site
+      - name: Generate routes and build cinematic site
         working-directory: app
-        run: bun run build
+        run: |
+          bun run check:ui
+          tsr generate
+          vite build
 
       - name: Verify static output
         run: |
           test -f app/dist/client/index.html
-          test -d app/dist/client/assets
           test -d app/dist/client/assets/world
+          test -n "$(find app/dist/client/assets/world -type f | head -1)"
           touch app/dist/client/.nojekyll
 
       - name: Configure Pages
