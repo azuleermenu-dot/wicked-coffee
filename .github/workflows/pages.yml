@@ -27,7 +27,11 @@ jobs:
       - name: Download full cinematic source
         run: |
           curl -fL "https://d2ol7oe51mr4n9.cloudfront.net/user_38JmUnMaaRRtQLkv4cn1Bj0fDuh/01bbb087-7999-4e38-abc3-0065990979e2.zip" -o wicked-coffee-source.zip
+          rm -rf app
           unzip -oq wicked-coffee-source.zip
+          test -f app/package.json
+          test -f app/vite.config.ts
+          test -d app/public/assets/world
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
@@ -36,7 +40,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: app
-        run: bun install --frozen-lockfile
+        run: bun install
 
       - name: Build and prerender cinematic site
         working-directory: app
@@ -45,6 +49,7 @@ jobs:
       - name: Verify static output
         run: |
           test -f app/dist/client/index.html
+          test -d app/dist/client/assets
           test -d app/dist/client/assets/world
           touch app/dist/client/.nojekyll
 
