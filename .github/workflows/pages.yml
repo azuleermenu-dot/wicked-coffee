@@ -27,7 +27,7 @@ jobs:
       - name: Download full cinematic source
         run: |
           curl -fL "https://d2ol7oe51mr4n9.cloudfront.net/user_38JmUnMaaRRtQLkv4cn1Bj0fDuh/01bbb087-7999-4e38-abc3-0065990979e2.zip" -o wicked-coffee-source.zip
-          unzip -q wicked-coffee-source.zip
+          unzip -oq wicked-coffee-source.zip
 
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
